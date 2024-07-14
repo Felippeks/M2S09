@@ -1,7 +1,7 @@
 package br.senai.lab365.semana7.service;
 
 import br.senai.lab365.semana7.controller.dto.PerfilRequest;
-import br.senai.lab365.semana7.entity.PerfilEntity;
+import br.senai.lab365.semana7.entity.Role;
 import br.senai.lab365.semana7.repository.PerfilRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ public class PerfilService {
             throw
                     new RuntimeException("Perfil já existe com o nome :" + perfilRequest.nomePerfil());
         }
-        PerfilEntity perfilEntity = new PerfilEntity();
-        perfilEntity.setNomePerfil(perfilRequest.nomePerfil());
-        repository.save(perfilEntity);
+        Role role = new Role();
+        role.setNomePerfil(perfilRequest.nomePerfil());
+        repository.save(role);
     }
 
-    public PerfilEntity validaPerfil(String nomePerfil){
-        PerfilEntity perfil = repository.findByNomePerfil(nomePerfil)
+    public Role validaPerfil(String nomePerfil){
+        Role perfil = repository.findByNomePerfil(nomePerfil)
                 .orElseThrow(
                         () -> new RuntimeException("Perfil não existe com nome : " + nomePerfil)
                 );

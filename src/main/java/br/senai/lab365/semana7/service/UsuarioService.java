@@ -1,14 +1,13 @@
 package br.senai.lab365.semana7.service;
 
 import br.senai.lab365.semana7.controller.dto.LoginRequest;
-import br.senai.lab365.semana7.entity.PerfilEntity;
+import br.senai.lab365.semana7.entity.Role;
 import br.senai.lab365.semana7.entity.UsuarioEntity;
 import br.senai.lab365.semana7.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -39,12 +38,12 @@ public class UsuarioService {
                         .isPresent()){
             throw new RuntimeException("Usuário existe com nome: "+cadastroRequest.username());
         }
-        PerfilEntity perfilEntity = perfilService.validaPerfil(cadastroRequest.nomePerfil());
+        Role role = perfilService.validaPerfil(cadastroRequest.nomePerfil());
 
         UsuarioEntity usuarioEntity = new UsuarioEntity();
         usuarioEntity.setUsername(cadastroRequest.username());
         usuarioEntity.setPassword(passwordEncoder.encode(cadastroRequest.password()));
-        usuarioEntity.setPerfilEntityList(Set.of(perfilEntity));
+        usuarioEntity.setRoleList(Set.of(role));
 
         usuarioRepository.save(usuarioEntity);
     }

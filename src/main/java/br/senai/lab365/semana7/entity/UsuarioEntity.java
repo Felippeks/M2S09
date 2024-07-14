@@ -22,19 +22,25 @@ public class UsuarioEntity implements UserDetails {
     private String username;
     private String password;
 
-    // Cascade desvincula um usuario ou perfil deletado da tabela many to many
-    // Fetch Eager -> busca todos os perfis atrelados a um usuário sempre que buscar esse usuário
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_papel",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "perfil_id")
     )
-    private Set<PerfilEntity> perfilEntityList;
+    private Set<Role> roleList;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "nutricionista_id")
+    private Nutricionista nutricionista;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return perfilEntityList;
+        return roleList;
     }
 
     @Override
