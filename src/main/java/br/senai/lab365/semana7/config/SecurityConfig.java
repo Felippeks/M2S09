@@ -42,6 +42,9 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST,"/login","/cadastro","/perfil")
                                     .permitAll()
+                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                .requestMatchers("/nutricionista/**").hasAuthority("NUTRICIONISTA")
+                                .requestMatchers("/paciente/**").hasAuthority("PACIENTE")
                                 .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())
